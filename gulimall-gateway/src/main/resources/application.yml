@@ -1,0 +1,39 @@
+server:
+  port: 80
+
+
+spring:
+  application:
+    name: gulimall-gateway
+  datasource:
+    url: jdbc:mysql://192.168.10.250:3307/gulimall_pms
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.10.250:8848
+    gateway:
+      routes:
+
+      - id: product_route
+        uri: lb://gulimall-product
+        predicates:
+        - Path=/api/product/**
+        filters:
+        - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+
+      - id: admin_route
+        uri: lb://renren-fast
+        predicates:
+        - Path=/api/**
+        filters:
+        - RewritePath=/api/?(?<segment>.*), /renren-fast/$\{segment}
+
+
+
+
+
+
