@@ -19,27 +19,22 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params, Long catelogId) {
-        if (catelogId == 0) {
-            IPage<AttrGroupEntity> page = this.page(
-                    new Query<AttrGroupEntity>().getPage(params),
-                    new QueryWrapper<AttrGroupEntity>()
-            );
-            return new PageUtils(page);
-        }else {
-            Object key = params.get("key");
-            QueryWrapper<AttrGroupEntity> queryWrapper = new QueryWrapper<AttrGroupEntity>()
-                    .eq("catelog_id", catelogId);
-            if (!StringUtils.isEmpty(params)) {
-                queryWrapper.and((obj) -> {
-                    obj.eq("attr_group_id", key).or().like("attr_group_name", key);
-                });
-            }
-            IPage<AttrGroupEntity> page = this.page(
-                    new Query<AttrGroupEntity>().getPage(params),
-                    queryWrapper);
-            return new PageUtils(page);
+        // 构建查询
+        QueryWrapper<AttrGroupEntity> queryWrapper = new QueryWrapper<AttrGroupEntity>();
+        if (catelogId != 0) {
+            queryWrapper.eq("catelog_id", catelogId);
         }
-
+        // 参数key 不为空
+        String key = (String) params.get("key");
+        if (!StringUtils.isEmpty(key)) { //参数不为空，添加查询参数
+            queryWrapper.and((obj) -> {
+                obj.eq("attr_group_id", key).or().like("attr_group_name", key);
+            });
+        }
+        IPage<AttrGroupEntity> page = this.page(
+                new Query<AttrGroupEntity>().getPage(params),
+                queryWrapper);
+        return new PageUtils(page);
     }
 
 }

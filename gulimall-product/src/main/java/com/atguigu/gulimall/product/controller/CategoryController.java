@@ -63,7 +63,7 @@ public class CategoryController {
         return R.ok();
     }
     /**
-     * 批量修改
+     * 批量修改排序
      */
     @RequestMapping("/update/sort")
     public R updateSort(@RequestBody CategoryEntity[] category){
@@ -77,7 +77,7 @@ public class CategoryController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
+		categoryService.updateCascade(category);
 
         return R.ok();
     }
