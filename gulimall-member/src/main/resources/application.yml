@@ -3,10 +3,17 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://192.168.124.8:3307/gulimall_ums
+    url: jdbc:mysql://192.168.10.250:3307/gulimall_ums
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.10.250:8848
+  application:
+    name: gulimall-member
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:

@@ -25,7 +25,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: http://192.168.124.3:8848
+        server-addr: http://192.168.10.250:8848
   redis:
     open: false  # 是否开启redis缓存  true开启   false关闭
     database: 0
